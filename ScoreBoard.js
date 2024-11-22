@@ -1,4 +1,4 @@
-class ScoreBoard {
+export default class ScoreBoard {
     constructor(props) {
         this.score = 0;
         this.element = props.element

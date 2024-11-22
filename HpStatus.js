@@ -1,8 +1,9 @@
 const hpContainer = document.getElementById("hp")
-class HpStatus {
+export default class HpStatus {
     constructor() {
         this.hp = 3
     }
+
     displayHp() {
         hpContainer.innerHTML = ""
         for (let i = 0; i < this.hp; i++) {
@@ -16,6 +17,7 @@ class HpStatus {
             hpContainer.append(img)
         }
     }
+
     takeDamage() {
         if (--this.hp < 0) {
             this.hp = 0

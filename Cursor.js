@@ -1,41 +1,35 @@
-let mouseCanvasX = 0
-let mouseCanvasY = 0
-const cursorSize = 150
+export default class Cursor {
+    constructor(canvas, ctx) {
+        this.canvas = canvas
+        this.ctx = ctx
 
-const score = new ScoreBoard({element: document.getElementById("score")})
+        this.mouseCanvasX = 0
+        this.mouseCanvasY = 0
+        this.cursorSize = 150
 
-const cursor = new Image()
-cursor.src = "assets/aim.png"
 
-function drawCursor() {
-    ctx.drawImage(
-        cursor,
-        mouseCanvasX - (cursorSize / 2), mouseCanvasY - (cursorSize / 2),
-        cursorSize, cursorSize
-    )
+        this.cursor = new Image()
+        this.cursor.src = "assets/aim.png"
+
+        this.canvas.addEventListener("mousemove", (e) => this.updateCursorPosition(e));
+    }
+
+
+    drawCursor() {
+        this.ctx.drawImage(
+            this.cursor,
+            this.mouseCanvasX - (this.cursorSize / 2), this.mouseCanvasY - (this.cursorSize / 2),
+            this.cursorSize, this.cursorSize
+        )
+    }
+
+
+    updateCursorPosition(e) {
+        const canvasRect = this.canvas.getBoundingClientRect();
+        this.mouseCanvasX = e.clientX - canvasRect.left;
+        this.mouseCanvasY = e.clientY - canvasRect.top;
+    }
+
+
 }
 
-
-function shot(e) {
-    let zombieDead = false
-    for (let i = 0; i < zombies.length; i++) {
-        const canvasRect = canvas.getBoundingClientRect()
-        let zombie = zombies[i]
-        if (zombie.isHit(e.clientX - canvasRect.left, e.clientY - canvasRect.top)) {
-            zombie.delZombie()
-            score.updateScore(20)
-            zombieDead = true
-            i--;
-        }
-    }
-    if (!zombieDead) {
-        score.updateScore(-5)
-    }
-}
-
-canvas.addEventListener("click", shot)
-canvas.addEventListener("mousemove", (e) => {
-    const canvasRect = canvas.getBoundingClientRect();
-    mouseCanvasX = e.clientX - canvasRect.left;
-    mouseCanvasY = e.clientY - canvasRect.top;
-})

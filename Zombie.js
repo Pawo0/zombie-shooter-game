@@ -10,23 +10,18 @@ const zombieImg = new Image()
 zombieImg.src = "assets/walkingdead.png"
 
 
-class Zombie {
+export default class Zombie {
     constructor(props) {
-        this.x = props.x
-        this.y = props.y
-        this.speed = props.speed
-        this.step = 0
-        this.img = new Image()
-        this.img.src = props.img
-        zombies.push(this)
-    }
+        this.ctx = props.ctx
 
-    static addZombie() {
-        new Zombie({
-            x: canvas.width,
-            y: randPos(),
-            speed: randSpeed()
-        })
+        this.x = props.x
+        this.y = randPos()
+        this.speed = randSpeed()
+        this.step = 0
+
+        this.frameX = 0
+
+        zombies.push(this)
     }
 
     delZombie() {
@@ -49,20 +44,30 @@ class Zombie {
         )
     }
 
+    reachedEnd() {
+        return this.x + zombieWidth < 0
+    }
+
+    update() {
+        this.frameX = (Math.round(this.step++ / 2) % 10) * zombieSpriteWidth
+        this.x -= this.speed
+    }
+
+
     draw() {
-        const frameX = (this.step++ % 10) * zombieSpriteWidth
-        ctx.drawImage(
+        this.update()
+        this.ctx.drawImage(
             zombieImg,
-            frameX, 0,
+            this.frameX, 0,
             zombieSpriteWidth, zombieSpriteHeight,
             this.x, this.y,
             zombieWidth, zombieHeight
         )
-        this.x -= this.speed
-        if (this.x + 100 < 0) {
-            hp.takeDamage()
-            this.delZombie()
+        if (this.reachedEnd()) {
+            console.log("Zombie dead")
         }
     }
 
 }
+
+export {zombies}
