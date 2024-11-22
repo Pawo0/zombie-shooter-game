@@ -6,7 +6,7 @@ canvas.height = 576
 
 const background = new Image()
 background.src = "assets/board-bg.jpg"
-
+const hp = new HpStatus()
 
 function drawBackground() {
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
@@ -33,8 +33,9 @@ function draw(timestamp) {
     drawBackground()
     drawZombies()
     drawCursor()
-}
 
+}
+hp.displayHp()
 requestAnimationFrame(draw)
 
 

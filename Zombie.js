@@ -60,7 +60,7 @@ class Zombie {
         )
         this.x -= this.speed
         if (this.x + 100 < 0) {
-            // damage
+            hp.takeDamage()
             this.delZombie()
         }
     }
