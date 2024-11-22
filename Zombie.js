@@ -1,3 +1,8 @@
+const randPos = () => Math.random() * (400 - 300) + 300
+const randSpeed = () => Math.random() * (5 - 1) + 1
+const zombieImg = "assets/walkingdead.png"
+const zombies = []
+
 class Zombie {
     constructor(props) {
         this.x = props.x
