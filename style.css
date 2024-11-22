@@ -1,0 +1,32 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+canvas {
+    background: #eee;
+    display: block;
+    /*cursor: none;*/
+}
+#score {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color:white;
+    font-size: 3em;
+    font-weight: bold;
+}
+#main{
+    position: relative;
+    width: fit-content;
+    margin: 0 auto;
+}
+#hp{
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+#hp img{
+    width: 50px;
+    height: 50px;
+}
