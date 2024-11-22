@@ -1,19 +1,22 @@
 import ScoreBoard from "./ScoreBoard.js";
 import HpStatus from "./HpStatus.js";
 import Cursor from "./Cursor.js";
-import Zombie, {zombies} from "./Zombie.js";
-
-const canvas = document.getElementById("canvas")
-const ctx = canvas.getContext("2d")
-const cursor = new Cursor(canvas, ctx)
-const score = new ScoreBoard({element: document.getElementById("score")})
-
-canvas.width = 1024
-canvas.height = 576
+import {zombies} from "./Zombie.js";
+import ZombieSpawner from "./ZombieSpawner.js";
 
 const background = new Image()
 background.src = "assets/board-bg.jpg"
+
+const canvas = document.getElementById("canvas")
+const ctx = canvas.getContext("2d")
+canvas.width = 1024
+canvas.height = 576
+
+const cursor = new Cursor(canvas, ctx)
+const score = new ScoreBoard({element: document.getElementById("score")})
 const hp = new HpStatus()
+const zombieSpawner = new ZombieSpawner(ctx, canvas)
+
 
 function drawBackground() {
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
@@ -25,6 +28,11 @@ function updateAndDrawZombies() {
     })
 }
 
+function drawCursor() {
+    cursor.drawCursor()
+}
+
+// game logic
 function checkIfZombieReachedEnd() {
     zombies.forEach((zombie) => {
         if (zombie.reachedEnd()) {
@@ -33,15 +41,6 @@ function checkIfZombieReachedEnd() {
         }
     })
 }
-
-
-function addZombie() {
-    new Zombie({x: canvas.width, ctx: ctx})
-}
-
-let lastTime = 0
-const fps = 30
-
 
 function shot(e) {
     let zombieDead = false
@@ -53,6 +52,7 @@ function shot(e) {
             score.updateScore(20)
             zombieDead = true
             i--;
+            return
         }
     }
     if (!zombieDead) {
@@ -61,24 +61,17 @@ function shot(e) {
 }
 
 
-function draw(timestamp) {
+function draw() {
     requestAnimationFrame(draw)
-
-    const deltaTime = timestamp - lastTime
-    if (deltaTime >= 40000 / fps) {
-        addZombie()
-        lastTime = timestamp
-    }
 
     drawBackground()
     updateAndDrawZombies()
     checkIfZombieReachedEnd()
-    cursor.drawCursor()
+    drawCursor()
 
 }
 
+zombieSpawner.start()
 hp.displayHp()
 requestAnimationFrame(draw)
-
-
 canvas.addEventListener("click", shot)

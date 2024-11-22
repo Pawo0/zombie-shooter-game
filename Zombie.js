@@ -1,11 +1,10 @@
-const randPos = () => Math.random() * (400 - 300) + 300
-const randSpeed = () => Math.random() * (5 - 1) + 1
+const randPos = (min = 300, max = 400) => Math.random() * (max - min) + min
+const randSpeed = (min = 1, max = 5) => Math.random() * (max - min) + min
+const randSize = (min = 80, max = 120) => Math.random() * (max - min) + min
 let zombies = []
 
 const zombieSpriteWidth = 200
 const zombieSpriteHeight = 400
-const zombieWidth = 100
-const zombieHeight = 200
 const zombieImg = new Image()
 zombieImg.src = "assets/walkingdead.png"
 
@@ -16,11 +15,13 @@ export default class Zombie {
 
         this.x = props.x
         this.y = randPos()
-        this.speed = randSpeed()
+        this.speed = randSpeed(props.minSpeed, props.maxSpeed)
+        this.zombieWidth = randSize()
+        this.zombieHeight = this.zombieWidth * 2
         this.step = 0
 
         this.frameX = 0
-
+        console.log("speed zombie", this.speed)
         zombies.push(this)
     }
 
@@ -45,7 +46,7 @@ export default class Zombie {
     }
 
     reachedEnd() {
-        return this.x + zombieWidth < 0
+        return this.x + this.zombieWidth < 0
     }
 
     update() {
@@ -61,7 +62,7 @@ export default class Zombie {
             this.frameX, 0,
             zombieSpriteWidth, zombieSpriteHeight,
             this.x, this.y,
-            zombieWidth, zombieHeight
+            this.zombieWidth, this.zombieHeight
         )
         if (this.reachedEnd()) {
             console.log("Zombie dead")
