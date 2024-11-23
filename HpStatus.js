@@ -24,4 +24,13 @@ export default class HpStatus {
         }
         this.displayHp()
     }
+
+    resetHp() {
+        this.hp = 3
+        this.displayHp()
+    }
+
+    isAlive() {
+        return this.hp > 0
+    }
 }

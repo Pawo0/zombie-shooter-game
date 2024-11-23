@@ -12,4 +12,13 @@ export default class ScoreBoard {
         this.score += scoreChange;
         this.displayScore();
     }
+
+    resetScore() {
+        this.score = 0;
+        this.displayScore();
+    }
+
+    getScore() {
+        return this.score
+    }
 }

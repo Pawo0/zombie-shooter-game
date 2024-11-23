@@ -3,6 +3,7 @@ import HpStatus from "./HpStatus.js";
 import Cursor from "./Cursor.js";
 import {zombies} from "./Zombie.js";
 import ZombieSpawner from "./ZombieSpawner.js";
+import GameOver from "./GameOver.js";
 
 const background = new Image()
 background.src = "assets/board-bg.jpg"
@@ -15,8 +16,21 @@ canvas.height = 576
 const cursor = new Cursor(canvas, ctx)
 const score = new ScoreBoard({element: document.getElementById("score")})
 const hp = new HpStatus()
-const zombieSpawner = new ZombieSpawner(ctx, canvas)
+let zombieSpawner = new ZombieSpawner(ctx, canvas)
+const gameOver = new GameOver(ctx, canvas, restartGame, endGame)
 
+function restartGame() {
+    zombies.length = 0
+    zombieSpawner = new ZombieSpawner(ctx, canvas)
+    zombieSpawner.start()
+    hp.resetHp()
+    score.resetScore()
+    canvas.addEventListener("click", shot)
+}
+
+function endGame() {
+    window.alert("lmao, there is no end for you")
+}
 
 function drawBackground() {
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
@@ -65,8 +79,14 @@ function draw() {
     requestAnimationFrame(draw)
 
     drawBackground()
-    updateAndDrawZombies()
-    checkIfZombieReachedEnd()
+    if (hp.isAlive()) {
+        updateAndDrawZombies()
+        checkIfZombieReachedEnd()
+    } else {
+        zombieSpawner.stop()
+        gameOver.drawAlert(score.getScore())
+        canvas.removeEventListener("click", shot)
+    }
     drawCursor()
 
 }
