@@ -4,6 +4,11 @@ export default class ScoreBoard {
         this.element = props.element
     }
 
+    resize(canvasWidth) {
+        const fontSize = canvasWidth * 0.05
+        this.element.style.fontSize = `${fontSize}px`
+    }
+
     displayScore() {
         this.element.innerHTML = this.score;
     }

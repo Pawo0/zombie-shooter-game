@@ -2,16 +2,22 @@ export default class Cursor {
     constructor(canvas, ctx) {
         this.canvas = canvas
         this.ctx = ctx
+        this.scaleFactor = canvas.width / 1024
 
         this.mouseCanvasX = 0
         this.mouseCanvasY = 0
-        this.cursorSize = 150
+        this.cursorSize = 150 * this.scaleFactor
 
 
         this.cursor = new Image()
         this.cursor.src = "assets/aim.png"
 
         this.canvas.addEventListener("mousemove", (e) => this.updateCursorPosition(e));
+    }
+
+    resize(canvasWidth) {
+        this.scaleFactor = canvasWidth / 1024
+        this.cursorSize = 150 * this.scaleFactor
     }
 
 

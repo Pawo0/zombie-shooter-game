@@ -21,6 +21,11 @@ export default class ZombieSpawner {
 
     }
 
+    resize(canvasWidth) {
+        this.canvas.width = canvasWidth
+
+    }
+
     randomSpawnInterval() {
         return Math.random() * (this.maxSpawnInterval - this.minSpawnInterval) + this.minSpawnInterval
     }
@@ -41,7 +46,7 @@ export default class ZombieSpawner {
         this.maxSpeed = this.maxSpeed + this.changeSpeed > this.maxSpeedLimit ? this.maxSpeedLimit : this.maxSpeed + this.changeSpeed
     }
 
-    start(){
+    start() {
         if (!this.scaling) {
             this.scaling = setInterval(() => {
                 this.updateSpawnInterval()
@@ -56,8 +61,14 @@ export default class ZombieSpawner {
         this.timeout = setTimeout(() => this.spawning(), this.spawnInterval)
 
 
-        console.log("Position between ", this.minSpawnInterval, " and ", this.maxSpawnInterval, " is ", this.spawnInterval)
-        new Zombie({x: this.canvas.width, ctx: this.ctx, minSpeed: this.minSpeed, maxSpeed: this.maxSpeed})
+        console.log("Spawn interval between ", this.minSpawnInterval, " and ", this.maxSpawnInterval, " is ", this.spawnInterval)
+        new Zombie({
+            x: this.canvas.width,
+            ctx: this.ctx,
+            canvas: this.canvas,
+            minSpeed: this.minSpeed,
+            maxSpeed: this.maxSpeed
+        })
     }
 
     stop() {

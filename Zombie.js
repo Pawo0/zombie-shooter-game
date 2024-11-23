@@ -12,18 +12,41 @@ zombieImg.src = "assets/walkingdead.png"
 export default class Zombie {
     constructor(props) {
         this.ctx = props.ctx
+        this.canvas = props.canvas
+        this.scaleFactor = this.canvas.width / 1024
+
+
+        this.baseSpeed = randSpeed(props.minSpeed, props.maxSpeed)
+        this.baseY = randPos(300, 400)
+        this.baseZombieWidth = randSize(80, 120)
+        this.baseZombieHeight = this.baseZombieWidth * 2
+
 
         this.x = props.x
-        this.y = randPos()
-        this.speed = randSpeed(props.minSpeed, props.maxSpeed)
-        this.zombieWidth = randSize()
-        this.zombieHeight = this.zombieWidth * 2
-        this.step = 0
+        this.speed = this.baseSpeed * this.scaleFactor
+        this.y = this.baseY * this.scaleFactor
+        this.zombieWidth = this.baseZombieWidth * this.scaleFactor
+        this.zombieHeight = this.baseZombieHeight * this.scaleFactor
 
+
+        this.step = 0
         this.frameX = 0
-        console.log("speed zombie", this.speed)
+        console.log("speed zombie between ", props.minSpeed, " and ", props.maxSpeed, " is ", this.speed)
         zombies.push(this)
     }
+
+    static resize(canvasWidth) {
+        let newScaleFactor = canvasWidth / 1024
+        zombies.forEach(zombie => {
+            zombie.x = zombie.x / zombie.scaleFactor * newScaleFactor;
+            zombie.scaleFactor = newScaleFactor;
+            zombie.y = zombie.baseY * zombie.scaleFactor;
+            zombie.speed = zombie.baseSpeed * zombie.scaleFactor;
+            zombie.zombieWidth = zombie.baseZombieWidth * zombie.scaleFactor;
+            zombie.zombieHeight = zombie.baseZombieHeight * zombie.scaleFactor;
+        })
+    }
+
 
     delZombie() {
         zombies = zombies.filter((zombie) => zombie !== this)
@@ -31,7 +54,7 @@ export default class Zombie {
 
     getBounds() {
         let upperLeft = {x: this.x, y: this.y}
-        let lowerRight = {x: this.x + 100, y: this.y + 200}
+        let lowerRight = {x: this.x + this.zombieWidth, y: this.y + this.zombieHeight}
         return {upperLeft, lowerRight}
     }
 

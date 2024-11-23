@@ -1,23 +1,42 @@
 import ScoreBoard from "./ScoreBoard.js";
 import HpStatus from "./HpStatus.js";
 import Cursor from "./Cursor.js";
-import {zombies} from "./Zombie.js";
+import Zombie, {zombies} from "./Zombie.js";
 import ZombieSpawner from "./ZombieSpawner.js";
 import GameOver from "./GameOver.js";
 
 const background = new Image()
 background.src = "assets/board-bg.jpg"
 
+
 const canvas = document.getElementById("canvas")
 const ctx = canvas.getContext("2d")
-canvas.width = 1024
-canvas.height = 576
+
 
 const cursor = new Cursor(canvas, ctx)
 const score = new ScoreBoard({element: document.getElementById("score")})
-const hp = new HpStatus()
+const hp = new HpStatus(canvas)
 let zombieSpawner = new ZombieSpawner(ctx, canvas)
 const gameOver = new GameOver(ctx, canvas, restartGame, endGame)
+
+
+function resizeCanvas() {
+    const ratio = 16 / 9
+    if (window.innerWidth / window.innerHeight > ratio) {
+        canvas.width = window.innerHeight * ratio
+        canvas.height = window.innerHeight
+    }else{
+        canvas.width = window.innerWidth
+        canvas.height = window.innerWidth / ratio
+    }
+    hp.resize(canvas.width)
+    score.resize(canvas.width)
+    cursor.resize(canvas.width)
+    Zombie.resize(canvas.width)
+    zombieSpawner.resize(canvas.width)
+    gameOver.resize(canvas.width)
+
+}
 
 function restartGame() {
     zombies.length = 0
@@ -58,7 +77,7 @@ function checkIfZombieReachedEnd() {
 
 function shot(e) {
     let gunShot = new Audio("assets/p90_shot.mp3")
-    gunShot.volume = 0.2
+    gunShot.volume = 0.5
     gunShot.play()
     let zombieDead = false
     for (let i = 0; i < zombies.length; i++) {
@@ -94,7 +113,9 @@ function draw() {
 
 }
 
-zombieSpawner.start()
+setTimeout(()=>zombieSpawner.start(),1000)
 hp.displayHp()
 requestAnimationFrame(draw)
 canvas.addEventListener("click", shot)
+window.addEventListener('resize',resizeCanvas)
+window.addEventListener('load',resizeCanvas)

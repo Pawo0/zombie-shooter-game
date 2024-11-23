@@ -6,14 +6,13 @@
 canvas {
     background: #eee;
     display: block;
-    cursor: none;
+    /*cursor: none;*/
 }
 #score {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 2%;
+    right: 2%;
     color:white;
-    font-size: 3em;
     font-weight: bold;
     z-index: 10;
     pointer-events: none;
@@ -25,8 +24,8 @@ canvas {
 }
 #hp{
     position: absolute;
-    top: 15px;
-    left: 15px;
+    top: 2%;
+    left: 2%;
     z-index: 10;
     pointer-events: none;
 }
