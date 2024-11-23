@@ -55,9 +55,9 @@ function drawBackground() {
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
 }
 
-function updateAndDrawZombies() {
+function updateAndDrawZombies(deltaTime) {
     zombies.forEach((zombie) => {
-        zombie.draw()
+        zombie.draw(deltaTime)
     })
 }
 
@@ -96,13 +96,16 @@ function shot(e) {
     }
 }
 
+let lastTime = 0
 
-function draw() {
-    requestAnimationFrame(draw)
+function gameLoop(timestamp) {
+    const deltaTime = timestamp - lastTime
+    lastTime = timestamp
+    requestAnimationFrame(gameLoop)
 
     drawBackground()
     if (hp.isAlive()) {
-        updateAndDrawZombies()
+        updateAndDrawZombies(deltaTime)
         checkIfZombieReachedEnd()
     } else {
         zombieSpawner.stop()
@@ -115,7 +118,7 @@ function draw() {
 
 setTimeout(()=>zombieSpawner.start(),1000)
 hp.displayHp()
-requestAnimationFrame(draw)
+requestAnimationFrame(gameLoop)
 canvas.addEventListener("click", shot)
 window.addEventListener('resize',resizeCanvas)
 window.addEventListener('load',resizeCanvas)

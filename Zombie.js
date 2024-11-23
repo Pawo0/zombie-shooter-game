@@ -72,14 +72,15 @@ export default class Zombie {
         return this.x + this.zombieWidth < 0
     }
 
-    update() {
+    update(deltaTime) {
         this.frameX = (Math.round(this.step++ / 2) % 10) * zombieSpriteWidth
-        this.x -= this.speed
+        let changeSpeed = (this.speed * deltaTime) / 30
+        this.x -= changeSpeed
     }
 
 
-    draw() {
-        this.update()
+    draw(deltaTime) {
+        this.update(deltaTime)
         this.ctx.drawImage(
             zombieImg,
             this.frameX, 0,

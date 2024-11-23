@@ -9,7 +9,7 @@ export default class ZombieSpawner {
         this.maxSpawnInterval = 2000
         this.changeSpawnInterval = 10
         this.minLimitSpawnInterval = 300
-        this.maxLimitSpawnInterval = 1000
+        this.maxLimitSpawnInterval = 800
 
         this.maxSpeed = 5
         this.minSpeed = 1

@@ -6,7 +6,7 @@
 canvas {
     background: #eee;
     display: block;
-    /*cursor: none;*/
+    cursor: none;
 }
 #score {
     position: absolute;
