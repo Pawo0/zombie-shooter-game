@@ -57,6 +57,9 @@ function checkIfZombieReachedEnd() {
 }
 
 function shot(e) {
+    let gunShot = new Audio("assets/p90_shot.mp3")
+    gunShot.volume = 0.2
+    gunShot.play()
     let zombieDead = false
     for (let i = 0; i < zombies.length; i++) {
         const canvasRect = canvas.getBoundingClientRect()
