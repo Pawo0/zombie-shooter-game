@@ -138,3 +138,8 @@ requestAnimationFrame(gameLoop)
 canvas.addEventListener("click", shot)
 window.addEventListener('resize', resizeCanvas)
 window.addEventListener('load', resizeCanvas)
+
+// Background music after first user click
+window.addEventListener("click", () => {
+        soundManage.playBackgroundSound();
+}, { once: true });
