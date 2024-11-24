@@ -22,7 +22,7 @@ export default class Zombie {
         this.baseZombieHeight = this.baseZombieWidth * 2
 
 
-        this.x = props.x
+        this.x = this.canvas.width
         this.speed = this.baseSpeed * this.scaleFactor
         this.y = this.baseY * this.scaleFactor
         this.zombieWidth = this.baseZombieWidth * this.scaleFactor

@@ -63,7 +63,6 @@ export default class ZombieSpawner {
 
         console.log("Spawn interval between ", this.minSpawnInterval, " and ", this.maxSpawnInterval, " is ", this.spawnInterval)
         new Zombie({
-            x: this.canvas.width,
             ctx: this.ctx,
             canvas: this.canvas,
             minSpeed: this.minSpeed,

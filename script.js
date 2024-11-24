@@ -52,6 +52,7 @@ function restartGame() {
     hp.resetHp()
     score.resetScore()
     canvas.addEventListener("click", shot)
+    canvas.style.cursor = "none"
 }
 
 function endGame() {
@@ -114,6 +115,7 @@ function gameLoop(timestamp) {
     if (hp.isAlive()) {
         updateAndDrawZombies(deltaTime)
         checkIfZombieReachedEnd()
+        drawCursor()
     } else {
         if (gameJustEnded) {
             gameJustEnded = false
@@ -122,10 +124,11 @@ function gameLoop(timestamp) {
             soundManage.playEndGameSound()
             zombieSpawner.stop()
             canvas.removeEventListener("click", shot)
+            canvas.style.cursor = "default"
         }
         gameOver.drawAlert(score.getScore())
     }
-    drawCursor()
+
 }
 
 setTimeout(() => zombieSpawner.start(), 1000)
