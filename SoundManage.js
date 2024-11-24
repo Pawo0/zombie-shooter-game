@@ -9,7 +9,13 @@ export default class SoundManage {
         this.backgroundSound.volume = 0.2;
 
         this.loseScream = new Audio("assets/scream.ogg");
+        this.evilLaugh = new Audio("assets/evillaugh.ogg");
     }
+    playEvilLaughSound() {
+        this.evilLaugh.currentTime = 0;
+        this.evilLaugh.play();
+    }
+
     playZombieAttackSound(){
         const zombieAttackSound = new Audio(`assets/bigchomp.ogg`);
         zombieAttackSound.play();

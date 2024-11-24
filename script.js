@@ -58,6 +58,7 @@ function restartGame() {
 }
 
 function endGame() {
+    soundManage.playEvilLaughSound()
     window.alert("lmao, there is no end for you")
 }
 
