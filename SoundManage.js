@@ -4,7 +4,7 @@ export default class SoundManage {
         this.endGameSound.loop = true
         this.endGameSound.volume = 0.5;
 
-        this.backgroundSound = new Audio("https://kappa.vgmsite.com/soundtracks/doom-eternal-original-game-soundtrack/rkyvxfygyy/05.%20BFG%20Division%202020.mp3");
+        this.backgroundSound = new Audio("assets/doomSound.mp3");
         this.backgroundSound.loop = true;
         this.backgroundSound.volume = 0.2;
 
