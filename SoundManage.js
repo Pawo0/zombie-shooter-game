@@ -29,7 +29,15 @@ export default class SoundManage {
 
     playBackgroundSound() {
         this.backgroundSound.currentTime = 0;
-        this.backgroundSound.play();
+
+
+        if (this.backgroundSound.readyState >= 4) {
+            this.backgroundSound.play();
+        } else {
+            this.backgroundSound.addEventListener('canplaythrough', () => {
+                this.backgroundSound.play();
+            }, { once: true });
+        }
     }
 
     stopBackgroundSound() {
