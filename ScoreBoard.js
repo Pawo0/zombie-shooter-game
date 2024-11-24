@@ -2,10 +2,11 @@ export default class ScoreBoard {
     constructor(props) {
         this.score = 0;
         this.element = props.element
+        this.size = props.size
     }
 
     resize(canvasWidth) {
-        const fontSize = canvasWidth * 0.05
+        const fontSize = canvasWidth * this.size
         this.element.style.fontSize = `${fontSize}px`
     }
 
@@ -15,6 +16,11 @@ export default class ScoreBoard {
 
     updateScore(scoreChange) {
         this.score += scoreChange;
+        this.displayScore();
+    }
+
+    setScore(score) {
+        this.score = score;
         this.displayScore();
     }
 

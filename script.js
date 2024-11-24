@@ -17,7 +17,8 @@ let gameJustEnded = true
 
 
 const cursor = new Cursor(canvas, ctx)
-const score = new ScoreBoard({element: document.getElementById("score")})
+const score = new ScoreBoard({element: document.getElementById("score"), size: 0.05})
+const bestScore = new ScoreBoard({element: document.getElementById("bestScore"), size: 0.02})
 const hp = new HpStatus(canvas)
 const soundManage = new SoundManage()
 let zombieSpawner = new ZombieSpawner(ctx, canvas)
@@ -35,6 +36,7 @@ function resizeCanvas() {
     }
     hp.resize(canvas.width)
     score.resize(canvas.width)
+    bestScore.resize(canvas.width)
     cursor.resize(canvas.width)
     Zombie.resize(canvas.width)
     zombieSpawner.resize(canvas.width)
@@ -84,6 +86,12 @@ function checkIfZombieReachedEnd() {
     })
 }
 
+function checkForNewBestScore(){
+    if (score.getScore() > bestScore.getScore()) {
+        bestScore.setScore(score.getScore())
+    }
+}
+
 function shot(e) {
     soundManage.playShotSound()
     let zombieDead = false
@@ -119,6 +127,7 @@ function gameLoop(timestamp) {
     } else {
         if (gameJustEnded) {
             gameJustEnded = false
+            checkForNewBestScore()
             soundManage.playLoseScreamSound()
             soundManage.stopBackgroundSound()
             soundManage.playEndGameSound()

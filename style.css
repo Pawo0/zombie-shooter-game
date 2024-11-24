@@ -8,9 +8,18 @@ canvas {
     display: block;
     cursor: none;
 }
+#bestScore {
+    position: absolute;
+    top: 1%;
+    right: 2%;
+    color:white;
+    font-weight: bold;
+    z-index: 10;
+    pointer-events: none;
+}
 #score {
     position: absolute;
-    top: 2%;
+    top: 5%;
     right: 2%;
     color:white;
     font-weight: bold;
