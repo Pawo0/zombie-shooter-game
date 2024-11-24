@@ -1,7 +1,5 @@
 export default class GameOver {
     constructor(ctx, canvas, onRestartCallback, onEndGameCallback) {
-        this.audio = document.querySelector("audio");
-        this.audio.volume = 0.5;
         this.ctx = ctx;
         this.canvas = canvas;
         this.onRestartCallback = onRestartCallback;
@@ -38,7 +36,6 @@ export default class GameOver {
 
     drawAlert(score) {
         this.isVisible = true;
-        this.audio.play();
 
 
         this.ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
@@ -123,6 +120,5 @@ export default class GameOver {
 
     clearAlert() {
         this.ctx.clearRect(this.alertX, this.alertY, this.alertWidth, this.alertHeight);
-        this.audio.pause();
     }
 }

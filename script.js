@@ -4,6 +4,7 @@ import Cursor from "./Cursor.js";
 import Zombie, {zombies} from "./Zombie.js";
 import ZombieSpawner from "./ZombieSpawner.js";
 import GameOver from "./GameOver.js";
+import SoundManage from "./SoundManage.js";
 
 const background = new Image()
 background.src = "assets/board-bg.jpg"
@@ -12,10 +13,13 @@ background.src = "assets/board-bg.jpg"
 const canvas = document.getElementById("canvas")
 const ctx = canvas.getContext("2d")
 
+let gameJustEnded = true
+
 
 const cursor = new Cursor(canvas, ctx)
 const score = new ScoreBoard({element: document.getElementById("score")})
 const hp = new HpStatus(canvas)
+const soundManage = new SoundManage()
 let zombieSpawner = new ZombieSpawner(ctx, canvas)
 const gameOver = new GameOver(ctx, canvas, restartGame, endGame)
 
@@ -25,7 +29,7 @@ function resizeCanvas() {
     if (window.innerWidth / window.innerHeight > ratio) {
         canvas.width = window.innerHeight * ratio
         canvas.height = window.innerHeight
-    }else{
+    } else {
         canvas.width = window.innerWidth
         canvas.height = window.innerWidth / ratio
     }
@@ -40,6 +44,9 @@ function resizeCanvas() {
 
 function restartGame() {
     zombies.length = 0
+    gameJustEnded = true
+    soundManage.stopEndGameSound()
+    soundManage.playBackgroundSound()
     zombieSpawner = new ZombieSpawner(ctx, canvas)
     zombieSpawner.start()
     hp.resetHp()
@@ -69,6 +76,7 @@ function drawCursor() {
 function checkIfZombieReachedEnd() {
     zombies.forEach((zombie) => {
         if (zombie.reachedEnd()) {
+            soundManage.playZombieAttackSound()
             hp.takeDamage()
             zombie.delZombie()
         }
@@ -76,14 +84,13 @@ function checkIfZombieReachedEnd() {
 }
 
 function shot(e) {
-    let gunShot = new Audio("assets/p90_shot.mp3")
-    gunShot.volume = 0.5
-    gunShot.play()
+    soundManage.playShotSound()
     let zombieDead = false
     for (let i = 0; i < zombies.length; i++) {
         const canvasRect = canvas.getBoundingClientRect()
         let zombie = zombies[i]
         if (zombie.isHit(e.clientX - canvasRect.left, e.clientY - canvasRect.top)) {
+            soundManage.playZombieFallingSound()
             zombie.delZombie()
             score.updateScore(20)
             zombieDead = true
@@ -108,17 +115,23 @@ function gameLoop(timestamp) {
         updateAndDrawZombies(deltaTime)
         checkIfZombieReachedEnd()
     } else {
-        zombieSpawner.stop()
+        if (gameJustEnded) {
+            gameJustEnded = false
+            soundManage.playLoseScreamSound()
+            soundManage.stopBackgroundSound()
+            soundManage.playEndGameSound()
+            zombieSpawner.stop()
+            canvas.removeEventListener("click", shot)
+        }
         gameOver.drawAlert(score.getScore())
-        canvas.removeEventListener("click", shot)
     }
     drawCursor()
-
 }
 
-setTimeout(()=>zombieSpawner.start(),1000)
+setTimeout(() => zombieSpawner.start(), 1000)
+soundManage.playBackgroundSound()
 hp.displayHp()
 requestAnimationFrame(gameLoop)
 canvas.addEventListener("click", shot)
-window.addEventListener('resize',resizeCanvas)
-window.addEventListener('load',resizeCanvas)
+window.addEventListener('resize', resizeCanvas)
+window.addEventListener('load', resizeCanvas)
