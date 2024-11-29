@@ -145,7 +145,7 @@ setTimeout(() => zombieSpawner.start(), 1000)
 soundManage.playBackgroundSound()
 hp.displayHp()
 requestAnimationFrame(gameLoop)
-canvas.addEventListener("click", shot)
+canvas.addEventListener("mousedown", shot)
 window.addEventListener('resize', resizeCanvas)
 window.addEventListener('load', resizeCanvas)
 

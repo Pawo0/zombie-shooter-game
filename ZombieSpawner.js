@@ -5,14 +5,16 @@ export default class ZombieSpawner {
         this.ctx = ctx
         this.canvas = canvas
 
-        this.minSpawnInterval = 1000
-        this.maxSpawnInterval = 2000
+        const hardDifficulty = true
+
+        this.minSpawnInterval = hardDifficulty ? 500 : 1000
+        this.maxSpawnInterval = hardDifficulty ? 1000 : 2000
         this.changeSpawnInterval = 20
         this.minLimitSpawnInterval = 300
         this.maxLimitSpawnInterval = 500
 
-        this.maxSpeed = 10
-        this.minSpeed = 5
+        this.maxSpeed = hardDifficulty ? 15 : 10
+        this.minSpeed = hardDifficulty ? 10 : 5
         this.changeSpeed = 0.2
         this.maxSpeedLimit = 30
         this.minSpeedLimit = 22

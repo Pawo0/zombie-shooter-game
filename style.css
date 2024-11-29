@@ -1,12 +1,16 @@
 * {
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
 }
-
+body{
+    background-color: #0a0702;
+}
 canvas {
     background: #eee;
     display: block;
     cursor: none;
+    border: 1px solid white;
 }
 #bestScore {
     position: absolute;
@@ -30,6 +34,7 @@ canvas {
     position: relative;
     width: fit-content;
     margin: 0 auto;
+    user-select: none;
 }
 #hp{
     position: absolute;
