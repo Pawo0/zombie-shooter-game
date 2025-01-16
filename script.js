@@ -53,7 +53,7 @@ function restartGame() {
     zombieSpawner.start()
     hp.resetHp()
     score.resetScore()
-    canvas.addEventListener("click", shot)
+    canvas.addEventListener("mousedown", shot)
     canvas.style.cursor = "none"
 }
 
@@ -133,7 +133,7 @@ function gameLoop(timestamp) {
             soundManage.stopBackgroundSound()
             soundManage.playEndGameSound()
             zombieSpawner.stop()
-            canvas.removeEventListener("click", shot)
+            canvas.removeEventListener("mousedown", shot)
             canvas.style.cursor = "default"
         }
         gameOver.drawAlert(score.getScore())
