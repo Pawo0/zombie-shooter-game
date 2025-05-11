@@ -4,7 +4,7 @@
 Zombie Shooter Game is a 2D survival shooter game developed using JavaScript and HTML Canvas. The goal of the game is to shoot zombies while trying to achieve the highest possible score. The game increases in difficulty as zombies spawn more frequently and move faster. The player loses health if zombies reach the left side of the screen, and the game ends when all health points are lost.
 
 ## Demo
-https://pawo0.github.io/Zombie-Game/
+[Play now!](https://pawo0.github.io/Zombie-Shooter-Game/)
 
 ## Preview
 ![image](https://github.com/user-attachments/assets/b03ef323-81f4-4a12-9cb4-7f628ab087d3)
