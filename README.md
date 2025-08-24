@@ -7,8 +7,8 @@ Zombie Shooter Game is a 2D survival shooter game developed using JavaScript and
 [Play now!](https://pawo0.github.io/zombie-shooter-game/)
 
 ## Preview
-![image](https://github.com/user-attachments/assets/b03ef323-81f4-4a12-9cb4-7f628ab087d3)
-![image](https://github.com/user-attachments/assets/89f8da8c-bed3-4f6b-890c-a0c4532df330)
+![in_game](https://github.com/user-attachments/assets/b03ef323-81f4-4a12-9cb4-7f628ab087d3)
+![menu](https://github.com/user-attachments/assets/89f8da8c-bed3-4f6b-890c-a0c4532df330)
 
 
 ## Key Features
